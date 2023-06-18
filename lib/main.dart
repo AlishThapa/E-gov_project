@@ -1,5 +1,8 @@
+import 'package:egov_proj/module/home_page/admin/home_page.dart';
 import 'package:flutter/material.dart';
-import 'module/loading_screen/home_page.dart';
+import 'package:get/get.dart';
+import 'module/auth/login_page/login_page.dart';
+import 'module/home_page/controller/home_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,15 +11,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    Get.put(HomeController());
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xffFFECEC),
       ),
-      home: const LoadingScreen(),
+      home: const AdminHomePage(),
     );
   }
 }
