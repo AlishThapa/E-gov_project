@@ -25,13 +25,29 @@ class UserHomePage extends StatelessWidget {
           itemCount: hc.biddingModel.length,
           itemBuilder: (context, index) {
             final item = hc.biddingModel[index];
-            return ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-              title: Text(item.title),
-              subtitle: Text(item.subTitle),
-              trailing: Text(
-                item.biddingPrice.toString(),
-              ),
+            return Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.teal,
+                  ),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Text(item.title),
+                          Text(item.subTitle),
+                        ],
+                      ),
+                      Text(
+                        item.biddingPrice.toString(),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.delete_forever_outlined),
+              ],
             );
           },
         );
@@ -39,3 +55,11 @@ class UserHomePage extends StatelessWidget {
     );
   }
 }
+// ListTile(
+//   contentPadding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+//   title: Text(item.title),
+//   subtitle: Text(item.subTitle),
+//   trailing: Text(
+//     item.biddingPrice.toString(),
+//   ),
+// ),

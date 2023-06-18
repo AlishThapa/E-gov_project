@@ -19,24 +19,30 @@ class AdminHomePage extends StatelessWidget {
           Icon(Icons.person),
         ],
       ),
-      body: Obx(() {
-        return ListView.separated(
-          separatorBuilder: (context, index) => const SizedBox(height: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          itemCount: hc.biddingModel.length,
-          itemBuilder: (context, index) {
-            final item = hc.biddingModel[index];
-            return ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-              title: Text(item.title),
-              subtitle: Text(item.subTitle),
-              trailing: Text(
-                item.biddingPrice.toString(),
-              ),
-            );
-          },
-        );
-      }),
+      body: Obx(
+        () {
+          return ListView.separated(
+            separatorBuilder: (context, index) => const SizedBox(height: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            itemCount: hc.biddingModel.length,
+            itemBuilder: (context, index) {
+              final item = hc.biddingModel[index];
+              return Card(
+                elevation: 10,
+                color: Colors.teal,
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  title: Text(item.title),
+                  subtitle: Text(item.subTitle),
+                  trailing: Text(
+                    item.biddingPrice.toString(),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text(
           'Add Bidding',
@@ -57,4 +63,3 @@ class AdminHomePage extends StatelessWidget {
     );
   }
 }
-

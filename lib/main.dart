@@ -1,4 +1,5 @@
 import 'package:egov_proj/module/home_page/admin/home_page.dart';
+import 'package:egov_proj/module/loading_screen/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'module/auth/login_page/login_page.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xffFFECEC),
       ),
-      home: const AdminHomePage(),
+      home: LoadingScreen(),
     );
   }
 }
