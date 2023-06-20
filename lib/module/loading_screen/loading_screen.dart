@@ -32,13 +32,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
+        padding: const EdgeInsets.all(20),
         height: size.height,
         width: size.width,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Colors.red,
-
               Colors.blue,
             ],
             begin: Alignment.centerLeft,
@@ -50,6 +50,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
             image: AssetImage(
               'assets/images/R.png',
             ),
+            height: 200,
+            width: 200,
           ),
         ),
       ),

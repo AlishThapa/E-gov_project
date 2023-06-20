@@ -12,7 +12,7 @@ class AddBidding extends StatelessWidget {
     super.key,
   });
 
-  final hc = Get.find<HomeController>();
+  final hc =Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,56 +35,63 @@ class AddBidding extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomTextField(
-                controller: hc.titleController,
-                validator: (p0) {
-                  final title = hc.titleController.text.trim();
-                  if (title.isEmpty) {
-                    return 'the field cannot be empty';
-                  }
-                },
-                labelText: 'Bidding title',
-              ),
-              CustomTextField(
-                controller: hc.subTitleController,
-                validator: (p0) {
-                  final subTitle = hc.subTitleController.text.trim();
-                  if (subTitle.isEmpty) {
-                    return 'the field cannot be empty';
-                  }
-                },
-                labelText: 'Bidding description',
-              ),
-              CustomTextField(
-                controller: hc.priceController,
-                validator: (p0) {
-                  final price = hc.priceController.text.trim();
-                  if (!price.isNum) {
-                    return 'Please specify only the price';
-                  }
-                },
-                labelText: 'Bidding price',
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: CupertinoColors.systemBlue,
-                  elevation: 10,
+          child: Form(
+            key: hc.formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextField(
+                  controller: hc.titleController,
+                  validator: (p0) {
+                    final title = hc.titleController.text.trim();
+                    if (title.isEmpty) {
+                      return 'the field cannot be empty';
+                    }
+                  },
+                  labelText: 'Bidding title',
                 ),
-                onPressed: () {
-                  hc.addList();
-                },
-                child: const Text(
-                  'Add Bidding',
-                  style: TextStyle(color: Colors.white),
+                CustomTextField(
+                  controller: hc.subTitleController,
+                  validator: (p0) {
+                    final subTitle = hc.subTitleController.text.trim();
+                    if (subTitle.isEmpty) {
+                      return 'the field cannot be empty';
+                    }
+                  },
+                  onChanged: (p0) {
+                  //
+                  },
+                  labelText: 'Bidding description',
                 ),
-              ),
-            ],
+                CustomTextField(
+                  controller: hc.enteredNumber,
+                  validator: (p0) {
+                    final price = hc.enteredNumber.text.trim();
+                    if (!price.isNum) {
+                      return 'Please specify only the price';
+                    }
+                  },
+                  labelText: 'Bidding price',
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: CupertinoColors.systemBlue,
+                    elevation: 10,
+                  ),
+                  onPressed: () {
+                    int number = int.tryParse(hc.enteredNumber.text) ?? 0;
+                    hc.add(number);
+                  },
+                  child: const Text(
+                    'Add Bidding',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
