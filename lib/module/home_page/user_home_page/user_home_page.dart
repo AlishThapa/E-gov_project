@@ -1,4 +1,3 @@
-import 'package:egov_proj/module/home_page/admin/widget/add_bidding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../auth/login_page/login_page.dart';
@@ -73,7 +72,7 @@ class UserHomePage extends StatelessWidget {
       ),
       // Inside the Obx widget in AdminHomePage class
       body: Obx(
-            () {
+        () {
           return ListView.separated(
             shrinkWrap: true,
             separatorBuilder: (context, index) => const SizedBox(height: 10),
@@ -104,31 +103,6 @@ class UserHomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                // child: ListTile(
-                //   title: Text('Title: ${item.title}'),
-                //   subtitle: Text('Description: ${item.subTitle}'),
-                //   trailing: SizedBox(
-                //     width: 100,
-                //     child: Padding(
-                //       padding: const EdgeInsets.only(right: 20.0),
-                //       child: Row(
-                //         children: [
-                //           Obx(() {
-                //             return Text(
-                //               'Rs ${item.biddingPrice.value}',
-                //             );
-                //           }),
-                //           InkWell(
-                //             onTap: () {
-                //               hc.decreaseNumber(index); // Call the method to decrease the price
-                //             },
-                //             child: const Icon(Icons.remove),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
               );
             },
           );
