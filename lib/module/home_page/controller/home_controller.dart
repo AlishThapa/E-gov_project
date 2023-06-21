@@ -1,24 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
 import '../model/bidding_model.dart';
 
 class HomeController extends GetxController {
-  final forKey= GlobalKey<FormState>();
+  var data = <Data>[].obs;
+  final formKey = GlobalKey<FormState>();
+  final enteredNumber = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController subTitleController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-  var biddingModel = <BiddingModel>[].obs;
 
-  void addList() {
-    biddingModel.add(
-      BiddingModel(
-        title: titleController.text.trim(),
-        subTitle: subTitleController.text.trim(),
-        biddingPrice: int.parse(
-          priceController.text.trim(),
+  void decreaseNumber(int index) {
+    if (data[index].number.value > 0) {
+      data[index].number.value--;
+    }
+    print(data[index].number.value);
+
+  }
+
+
+
+  void add(int number) {
+    formKey.currentState!.save();
+    if (formKey.currentState!.validate()) {
+      data.add(
+        Data(
+          number: number.obs,
+          title: titleController.text.trim(),
+          subTitle: subTitleController.text.trim(),
         ),
-      ),
-    );
+      );
+      Get.back();
+    }
   }
 }

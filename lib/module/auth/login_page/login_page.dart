@@ -77,7 +77,7 @@ class LogInPage extends StatelessWidget {
               ),
               CustomButton(
                 text: 'Login as Admin',
-                onPressed: () {},
+                onPressed: lc.onLoginAsAdminPressed,
               ),
               CustomButton(
                 text: 'Register',

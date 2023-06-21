@@ -97,7 +97,7 @@ class RegisteraPage extends StatelessWidget {
               ),
               CustomButton(
                 text: 'Login',
-                onPressed: () {},
+                onPressed: rc.onLoginPressed,
               ),
             ],
           ),

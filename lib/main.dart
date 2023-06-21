@@ -1,8 +1,8 @@
+import 'package:egov_proj/module/auth/login_page/login_page.dart';
 import 'package:egov_proj/module/home_page/admin/home_page.dart';
 import 'package:egov_proj/module/loading_screen/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'module/auth/login_page/login_page.dart';
 import 'module/home_page/controller/home_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

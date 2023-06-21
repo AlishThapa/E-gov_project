@@ -1,7 +1,9 @@
+import 'package:get/get.dart';
+
 class BiddingModel {
   String title;
   String subTitle;
-  int biddingPrice;
+  RxInt biddingPrice;
 
   BiddingModel({
     required this.title,
@@ -10,4 +12,14 @@ class BiddingModel {
   });
 }
 
+class Data {
+  String title;
+  String subTitle;
+  RxInt number;
 
+  Data({
+    required this.title,
+    required this.subTitle,
+    required this.number,
+  });
+}
