@@ -5,6 +5,7 @@ import '../model/bidding_model.dart';
 class HomeController extends GetxController {
   var data = <Data>[].obs;
   final formKey = GlobalKey<FormState>();
+  final id=TextEditingController();
   final enteredNumber = TextEditingController();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController subTitleController = TextEditingController();

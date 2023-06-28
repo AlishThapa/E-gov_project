@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:egov_proj/module/auth/widget/count_down_timer.dart';
+import 'package:egov_proj/module/home_page/admin/user_info.dart';
 import 'package:egov_proj/module/home_page/admin/widget/add_bidding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../auth/login_page/login_page.dart';
+import '../../widget/custom_snackbar.dart';
 import '../controller/home_controller.dart';
 
 class AdminHomePage extends StatelessWidget {
@@ -11,6 +14,8 @@ class AdminHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hc = Get.find<HomeController>();
+    final fireStore =
+        FirebaseFirestore.instance.collection("admincollection").snapshots();
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.menu),
@@ -73,61 +78,93 @@ class AdminHomePage extends StatelessWidget {
         ],
       ),
       // Inside the Obx widget in AdminHomePage class
-      body: Obx(
-        () {
-          return ListView.separated(
-            shrinkWrap: true,
-            separatorBuilder: (context, index) => const SizedBox(height: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            itemCount: hc.data.length,
-            itemBuilder: (context, index) {
-              final item = hc.data[index];
-              return Card(
-                elevation: 0,
-                color: Colors.teal.withOpacity(0.7),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Title: ${item.title}'),
-                          Text('Description: ${item.subTitle}'),
-                        ],
-                      ),
-                      const CountdownTimer(),
-                      Obx(() {
-                        return Text(item.number.value.toString());
+      body: Column(
+        children: [
+          StreamBuilder<QuerySnapshot>(
+              stream: fireStore,
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting)
+                  return const Center(child: CircularProgressIndicator());
+                if (snapshot.hasError) {
+                  CustomSnackBar.error("Something went wrong");
+                }
+                return Expanded(
+                  child: ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                            child: Card(
+                              color: Colors.pinkAccent,
+                              child: ListTile(
+                                title: Text(
+                                  snapshot.data!.docs[index]['biddingTitle']
+                                      .toString(),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                                subtitle: Text(
+                                  snapshot
+                                      .data!.docs[index]['biddingDescreption']
+                                      .toString(),
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 10.0),
+                                ),
+                                leading: Text(
+                                  "RS:${snapshot.data!.docs[index]['price'].toString()}",
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 15.0),
+                                ),
+                                trailing: TextButton(
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: () {
+                                      FirebaseFirestore.instance
+                                          .collection("admincollection")
+                                          .doc(snapshot.data!.docs[index]['id']
+                                              .toString())
+                                          .delete();
+                                    }),
+                              ),
+                            ),
+                            onTap: () {});
                       }),
-                    ],
-                  ),
-                ),
+                );
+              }),
+        ],
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton.extended(
+            label: const Text(
+              'Add Bidding',
+              style: TextStyle(fontSize: 13),
+            ),
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              showDialog(
+                barrierDismissible: true,
+                barrierColor: Colors.transparent,
+                context: context,
+                builder: (context) {
+                  return AddBidding();
+                },
               );
             },
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text(
-          'Add Bidding',
-          style: TextStyle(fontSize: 13),
-        ),
-        icon: const Icon(Icons.add),
-        onPressed: () {
-          showDialog(
-            barrierDismissible: true,
-            barrierColor: Colors.transparent,
-            context: context,
-            builder: (context) {
-              return AddBidding();
-            },
-          );
-        },
+          ),
+          TextButton(
+              onPressed: () {
+                Get.to(const UserInfo());
+              },
+              child: const Text("User Info")),
+        ],
       ),
     );
   }

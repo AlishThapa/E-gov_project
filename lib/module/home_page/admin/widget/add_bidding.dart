@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:egov_proj/admin_register_model/register_admin.dart';
+import 'package:egov_proj/cloud_firestore/cloud_firestore.dart';
 import 'package:egov_proj/module/home_page/admin/widget/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,16 @@ class AddBidding extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextField(
+                  controller: hc.id,
+                  validator: (p0) {
+                    final price = hc.id.text.trim();
+                    if (!price.isNum) {
+                      return 'Enter id in number only';
+                    }
+                  },
+                  labelText: 'bidding id',
+                ),
+                CustomTextField(
                   controller: hc.titleController,
                   validator: (p0) {
                     final title = hc.titleController.text.trim();
@@ -82,8 +94,13 @@ class AddBidding extends StatelessWidget {
                     elevation: 10,
                   ),
                   onPressed: () {
-                    int number = int.tryParse(hc.enteredNumber.text) ?? 0;
-                    hc.add(number);
+    hc.formKey.currentState!.save();
+    if (hc.formKey.currentState!.validate()) {
+    FirestoreServices().createAdmin(AdminMOdel(biddingTitle: hc.titleController.text, biddingDescreption: hc.subTitleController.text, price: hc.enteredNumber.text, id: hc.id.text));
+    int number = int.tryParse(hc.enteredNumber.text) ?? 0;
+    hc.add(number);
+
+    }
                   },
                   child: const Text(
                     'Add Bidding',
