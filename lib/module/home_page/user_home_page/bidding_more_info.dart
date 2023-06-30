@@ -74,17 +74,23 @@ class BiddingInfoo extends StatelessWidget {
                 final snapshott =
                     await fs.collection("admincollection").doc(ide).get();
                 final data=snapshott.data()??{};
-                final price=data['price'];
-                int decreaseCost=price-1000;
-                if(decreaseCost<=0){
-                  decreaseCost=0;
+                var price=data['price'];
+                price=int.parse(price);
+                print(price);
+                print(price.runtimeType);
+
+               price=price-((5/100)*price).truncate();
+                print(price);
+                if(price<=0){
+                  price=0;
                 }
+                price=price.toString();
 
 
                 fs
                     .collection("admincollection")
                     .doc(ide)
-                    .update({'price':decreaseCost});
+                    .update({'price':price});
               },
               child: const Text("Decrease price")),
         ],
