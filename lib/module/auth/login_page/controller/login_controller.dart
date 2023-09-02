@@ -53,11 +53,16 @@ class LoginController extends GetxController {
     final password = passwordController.text.trim();
     if (email.isEmpty && password.isEmpty) {
       CustomSnackBar.error('Please enter the email and password');
-    } else {
+    }
+    else if(email=="nepal@gmail.com"&&password=="nepali") {
       CustomSnackBar.success('Welcome');
       Get.to(
             () => const AdminHomePage(),
       );
     }
+    else{
+      CustomSnackBar.error('Admin email or password is wrong');
+    }
+
   }
 }

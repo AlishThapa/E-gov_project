@@ -27,7 +27,8 @@ class RegisterController extends GetxController {
     final name = nameController.text.trim();
     final phone = phoneController.text.trim();
 
-    if (email.isEmpty && password.isEmpty && name.isEmpty && phone.isEmpty) {
+
+    if (email.isEmpty || password.isEmpty || name.isEmpty || phone.isEmpty) {
       CustomSnackBar.error('Please enter in all the fields');
 
     } else{
@@ -35,7 +36,7 @@ class RegisterController extends GetxController {
       final firestoreresponse=await FirestoreServices().createUser(RegisterUser(Name: name,Phone: phone,password: password,email: email));
       CustomSnackBar.success(authresponse+" "+firestoreresponse);
       Get.to(
-        () => const AdminHomePage(),
+        () =>  LogInPage(),
       );
     }
   }
