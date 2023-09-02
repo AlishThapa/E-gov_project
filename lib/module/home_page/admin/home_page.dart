@@ -139,32 +139,36 @@ class AdminHomePage extends StatelessWidget {
               }),
         ],
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton.extended(
-            label: const Text(
-              'Add Bidding',
-              style: TextStyle(fontSize: 13),
-            ),
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              showDialog(
-                barrierDismissible: true,
-                barrierColor: Colors.transparent,
-                context: context,
-                builder: (context) {
-                  return AddBidding();
-                },
-              );
-            },
-          ),
-          TextButton(
+      floatingActionButton: Padding(
+        padding: EdgeInsets.all(40.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FloatingActionButton.extended(
+              label: const Text(
+                'Add Bidding',
+                style: TextStyle(fontSize: 13),
+              ),
+              icon: const Icon(Icons.add),
               onPressed: () {
-                Get.to(const UserInfo());
+                showDialog(
+                  barrierDismissible: true,
+                  barrierColor: Colors.transparent,
+                  context: context,
+                  builder: (context) {
+                    return AddBidding();
+                  },
+                );
               },
-              child: const Text("User Info")),
-        ],
+            ),
+
+            FloatingActionButton.extended(
+                onPressed: () {
+                  Get.to(const UserInfo());
+                },
+                label: const Text("User Info")),
+          ],
+        ),
       ),
     );
   }
